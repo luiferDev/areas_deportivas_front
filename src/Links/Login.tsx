@@ -28,7 +28,7 @@ export function Login() {
 					</CardDescription>
 					<CardAction>
 						<Button variant="outline">
-							<Link to={'/sing-up'}>Sign Up</Link>
+							<Link to={'/sign-up'}>Sign Up</Link>
 						</Button>
 					</CardAction>
 				</CardHeader>
