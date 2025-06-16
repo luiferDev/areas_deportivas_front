@@ -97,7 +97,7 @@ export function NavigationMenuComponent() {
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>Components</NavigationMenuTrigger>
+					<NavigationMenuTrigger>Comunidad</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
 							{components.map((component) => (
@@ -117,11 +117,11 @@ export function NavigationMenuComponent() {
 						asChild
 						className={navigationMenuTriggerStyle()}
 					>
-						<Link to="/docs">Docs</Link>
+						<Link to="/docs">Recursos</Link>
 					</NavigationMenuLink>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>List</NavigationMenuTrigger>
+					<NavigationMenuTrigger>Catálogo</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-[300px] gap-4">
 							<li>
@@ -159,7 +159,7 @@ export function NavigationMenuComponent() {
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>Simple</NavigationMenuTrigger>
+					<NavigationMenuTrigger>Contacto</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-[200px] gap-4">
 							<li>
@@ -177,7 +177,7 @@ export function NavigationMenuComponent() {
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>With Icon</NavigationMenuTrigger>
+					<NavigationMenuTrigger>Entrar</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-[200px] gap-4">
 							<li>
