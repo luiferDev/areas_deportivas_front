@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Link } from 'react-router';
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from 'lucide-react';
+import { ClipboardSignatureIcon, LogInIcon } from 'lucide-react';
 
 import {
 	NavigationMenu,
@@ -56,6 +56,14 @@ export function NavigationMenuComponent() {
 	return (
 		<NavigationMenu className='m-auto ' viewport={false}>
 			<NavigationMenuList>
+			<NavigationMenuItem>
+					<NavigationMenuLink
+						asChild
+						className={navigationMenuTriggerStyle()}
+					>
+						<Link to="/">Home</Link>
+					</NavigationMenuLink>
+				</NavigationMenuItem>
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>Home</NavigationMenuTrigger>
 					<NavigationMenuContent>
@@ -183,29 +191,20 @@ export function NavigationMenuComponent() {
 							<li>
 								<NavigationMenuLink asChild>
 									<Link
-										to="#"
+										to="/login"
 										className="flex-row items-center gap-2"
 									>
-										<CircleHelpIcon />
-										Backlog
+										<LogInIcon />
+										Log In
 									</Link>
 								</NavigationMenuLink>
 								<NavigationMenuLink asChild>
 									<Link
-										to="#"
+										to="/sign-up"
 										className="flex-row items-center gap-2"
 									>
-										<CircleIcon />
-										To Do
-									</Link>
-								</NavigationMenuLink>
-								<NavigationMenuLink asChild>
-									<Link
-										to="#"
-										className="flex-row items-center gap-2"
-									>
-										<CircleCheckIcon />
-										Done
+										<ClipboardSignatureIcon />
+										Sing Up
 									</Link>
 								</NavigationMenuLink>
 							</li>
