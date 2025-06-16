@@ -14,49 +14,11 @@ import {
 	navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 
-const components: { title: string; to: string; description: string }[] = [
-	{
-		title: 'Alert Dialog',
-		to: '/docs/primitives/alert-dialog',
-		description:
-			'A modal dialog that interrupts the user with important content and expects a response.',
-	},
-	{
-		title: 'Hover Card',
-		to: '/docs/primitives/hover-card',
-		description:
-			'For sighted users to preview content available behind a link.',
-	},
-	{
-		title: 'Progress',
-		to: '/docs/primitives/progress',
-		description:
-			'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
-	},
-	{
-		title: 'Scroll-area',
-		to: '/docs/primitives/scroll-area',
-		description: 'Visually or semantically separates content.',
-	},
-	{
-		title: 'Tabs',
-		to: '/docs/primitives/tabs',
-		description:
-			'A set of layered sections of content—known as tab panels—that are displayed one at a time.',
-	},
-	{
-		title: 'Tooltip',
-		to: '/docs/primitives/tooltip',
-		description:
-			'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
-	},
-];
-
 export function NavigationMenuComponent() {
 	return (
-		<NavigationMenu className='m-auto ' viewport={false}>
+		<NavigationMenu className="fixed m-auto ml-92" viewport={false}>
 			<NavigationMenuList>
-			<NavigationMenuItem>
+				<NavigationMenuItem>
 					<NavigationMenuLink
 						asChild
 						className={navigationMenuTriggerStyle()}
@@ -65,7 +27,7 @@ export function NavigationMenuComponent() {
 					</NavigationMenuLink>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>Home</NavigationMenuTrigger>
+					<NavigationMenuTrigger>Catálogo</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
 							<li className="row-span-3">
@@ -105,22 +67,6 @@ export function NavigationMenuComponent() {
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>Comunidad</NavigationMenuTrigger>
-					<NavigationMenuContent>
-						<ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-							{components.map((component) => (
-								<ListItem
-									key={component.title}
-									title={component.title}
-									to={component.to}
-								>
-									{component.description}
-								</ListItem>
-							))}
-						</ul>
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-				<NavigationMenuItem>
 					<NavigationMenuLink
 						asChild
 						className={navigationMenuTriggerStyle()}
@@ -128,45 +74,8 @@ export function NavigationMenuComponent() {
 						<Link to="/docs">Recursos</Link>
 					</NavigationMenuLink>
 				</NavigationMenuItem>
-				<NavigationMenuItem>
-					<NavigationMenuTrigger>Catálogo</NavigationMenuTrigger>
-					<NavigationMenuContent>
-						<ul className="grid w-[300px] gap-4">
-							<li>
-								<NavigationMenuLink asChild>
-									<Link to="#">
-										<div className="font-medium">
-											Components
-										</div>
-										<div className="text-muted-foreground">
-											Browse all components in the
-											library.
-										</div>
-									</Link>
-								</NavigationMenuLink>
-								<NavigationMenuLink asChild>
-									<Link to="#">
-										<div className="font-medium">
-											Documentation
-										</div>
-										<div className="text-muted-foreground">
-											Learn how to use the library.
-										</div>
-									</Link>
-								</NavigationMenuLink>
-								<NavigationMenuLink asChild>
-									<Link to="#">
-										<div className="font-medium">Blog</div>
-										<div className="text-muted-foreground">
-											Read our latest blog posts.
-										</div>
-									</Link>
-								</NavigationMenuLink>
-							</li>
-						</ul>
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-				<NavigationMenuItem>
+			
+						<NavigationMenuItem>
 					<NavigationMenuTrigger>Contacto</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-[200px] gap-4">
