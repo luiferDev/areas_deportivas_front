@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Link } from 'react-router';
-import { ClipboardSignatureIcon, LogInIcon } from 'lucide-react';
+import { ClipboardSignatureIcon, LogInIcon, LogOutIcon } from 'lucide-react';
 
 import {
 	NavigationMenu,
@@ -13,8 +13,12 @@ import {
 	NavigationMenuTrigger,
 	navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
+import { useAuthStore } from '@/store/Auth';
 
 export function NavigationMenuComponent() {
+	const logout = useAuthStore((state) => state.logout);
+	const isAuth = useAuthStore((state) => state.isAuth);
+
 	return (
 		<NavigationMenu className="fixed m-auto ml-92" viewport={false}>
 			<NavigationMenuList>
@@ -74,8 +78,8 @@ export function NavigationMenuComponent() {
 						<Link to="/docs">Recursos</Link>
 					</NavigationMenuLink>
 				</NavigationMenuItem>
-			
-						<NavigationMenuItem>
+
+				<NavigationMenuItem>
 					<NavigationMenuTrigger>Contacto</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-[200px] gap-4">
@@ -116,6 +120,20 @@ export function NavigationMenuComponent() {
 										Sing Up
 									</Link>
 								</NavigationMenuLink>
+								{isAuth ? (
+									<NavigationMenuLink asChild>
+										<Link
+											onClick={logout}
+											to="/login"
+											className="flex-row items-center gap-2"
+										>
+											<LogOutIcon />
+											Log Out
+										</Link>
+									</NavigationMenuLink>
+								) : (
+									''
+								)}
 							</li>
 						</ul>
 					</NavigationMenuContent>
