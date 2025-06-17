@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { api } from '@/fetch/api';
 import { useAuthStore } from '@/store/Auth';
+import { auth } from '@/fetch/auh';
 
 interface LoginForm {
 	email: string;
@@ -21,22 +22,22 @@ const loginRequest = async (email: string, password: string) => {
 	return res.data;
 };
 
-// const profileRequest = async ({ email }: { email: string }) => {
-// 	return await api.get(`/User?username=${email}`);
-// };
+const profileRequest = async (email: string) => {
+	return await auth.get(`/api/Usuario/user?email=${email}`);
+};
 
 export function Login() {
 	const { register, handleSubmit } = useForm<LoginForm>();
 	const setToken = useAuthStore((state) => state.setToken);
-	//const setProfile = useAuthStore((state) => state.setProfile);
+	const setProfile = useAuthStore((state) => state.setProfile);
 	const navigate = useNavigate();
 
 	const onLogin = async (data: LoginForm) => {
 		try {
-			console.log('Datos login:', data);
 			const res = await loginRequest(data.email, data.password);
-			console.log('Login OK, token:', res.token);
+			const profile = await profileRequest(data.email);
 			setToken(res.token);
+			setProfile(profile.data);
 			navigate('/');
 		} catch (error) {
 			console.error('Error al hacer login:', error);
