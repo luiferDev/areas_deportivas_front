@@ -49,7 +49,7 @@ export function SignUp() {
 			<main className="flex flex-row justify-between">
 				<aside className="bg-violet-800 h-[400px] w-1/2 text-start justify-start align-start mt-16">
 					<div className="ml-20 pt-20">
-						<h3 className="text-5xl font-bold">Regístrate</h3>
+						<h2 className="text-5xl font-bold">Regístrate</h2>
 						<p className="text-3xl w-80 mt-4">
 							Comienza tu ruta para reservar tus clases favoritas
 							y tus espacios de entrenamiento
@@ -57,12 +57,12 @@ export function SignUp() {
 					</div>
 				</aside>
 				<NavigationMenuComponent />
-				<div className="w-full max-w-sm mt-16">
+				<div className="w-full max-w-sm mt-16 border-2 p-8 rounded-2xl">
 					<h2>
-						<h2 className="flex justify-start">
+						<h2 className="flex justify-start font-bold">
 							Regístrate
 						</h2>
-						<p className="flex justify-start text-start">
+						<p className="flex justify-start text-start text-sm mb-4">
 							Ingresa tus datos para registrarte
 						</p>
 					</h2>
@@ -75,7 +75,9 @@ export function SignUp() {
 										id="nombre"
 										type="text"
 										placeholder="Jhon Doe"
-										{...register('nombre',{required:true})}
+										{...register('nombre', {
+											required: true,
+										})}
 										required
 									/>
 								</div>
@@ -85,7 +87,9 @@ export function SignUp() {
 										id="email"
 										type="email"
 										placeholder="m@example.com"
-										{...register('email',{required:true})}
+										{...register('email', {
+											required: true,
+										})}
 										required
 									/>
 								</div>
@@ -99,16 +103,18 @@ export function SignUp() {
 										id="password"
 										type="password"
 										placeholder="*************"
-										{...register('password',{required:true})}
+										{...register('password', {
+											required: true,
+										})}
 										required
 									/>
 								</div>
 							</div>
-					<footer className="flex-col gap-2 mt-8">
-						<Button type="submit" className="w-full">
-							Registrarse
-						</Button>
-					</footer>
+							<footer className="flex-col gap-2 mt-8">
+								<Button type="submit" className="w-full">
+									Registrarse
+								</Button>
+							</footer>
 						</form>
 					</div>
 				</div>
