@@ -1,13 +1,4 @@
 import { Button } from '@/components/ui/button';
-import {
-	Card,
-	CardAction,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Footer from '@/UI/Footer';
@@ -51,26 +42,27 @@ export function Login() {
 			console.error('Error al hacer login:', error);
 		}
 	};
-	
-	
+
 	return (
 		<>
 			<main className="flex flex-row justify-between">
 				<NavigationMenuComponent />
-				<div className="w-full max-w-sm mt-16">
-					<h2>
-						<h2 className="flex justify-start">
-							Ingresa a tu cuenta
-						</h2>
-						<p className="flex justify-start text-start">
-							Ingresa tu Email para entrar a tu cuenta
-						</p>
+				<div className="w-full max-w-sm mt-16 border-2 p-6 rounded-2xl">
+					<div className="flex flex-row justify-between items-center">
+						<div className="pb-4">
+							<h2 className="flex justify-start font-bold">
+								Ingresa a tu cuenta
+							</h2>
+							<p className="flex justify-start text-start text-sm w-40">
+								Ingresa tu Email para entrar a tu cuenta
+							</p>
+						</div>
 						<div>
 							<Button variant="outline">
 								<Link to={'/sign-up'}>Sign Up</Link>
 							</Button>
 						</div>
-					</h2>
+					</div>
 					<div>
 						<form onSubmit={handleSubmit(onLogin)}>
 							<div className="flex flex-col gap-6">
@@ -108,14 +100,20 @@ export function Login() {
 									/>
 								</div>
 							</div>
-					<footer className="flex-col gap-2 mt-8">
-						<Button type="submit" className="w-full cursor-pointer">
-							Entrar
-						</Button>
-						<Button variant="outline" className="w-full">
-							Login with Google
-						</Button>
-					</footer>
+							<footer className="flex-col gap-2 mt-8">
+								<Button
+									type="submit"
+									className="w-full cursor-pointer"
+								>
+									Entrar
+								</Button>
+								<Button
+									variant="outline"
+									className="w-full mt-4 cursor-pointer"
+								>
+									Login with Google
+								</Button>
+							</footer>
 						</form>
 					</div>
 				</div>
