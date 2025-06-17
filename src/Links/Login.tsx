@@ -12,37 +12,78 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Footer from '@/UI/Footer';
 import { NavigationMenuComponent } from '@/UI/NavigationMenu';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form';
+import { api } from '@/fetch/api';
+import { useAuthStore } from '@/store/Auth';
+
+interface LoginForm {
+	email: string;
+	password: string;
+}
+
+const loginRequest = async (email: string, password: string) => {
+	const res = await api.post('/api/Auth/login', {
+		email: email,
+		password: password,
+	});
+	return res.data;
+};
+
+// const profileRequest = async ({ email }: { email: string }) => {
+// 	return await api.get(`/User?username=${email}`);
+// };
 
 export function Login() {
+	const { register, handleSubmit } = useForm<LoginForm>();
+	const setToken = useAuthStore((state) => state.setToken);
+	//const setProfile = useAuthStore((state) => state.setProfile);
+	const navigate = useNavigate();
+
+	const onLogin = async (data: LoginForm) => {
+		try {
+			console.log('Datos login:', data);
+			const res = await loginRequest(data.email, data.password);
+			console.log('Login OK, token:', res.token);
+			setToken(res.token);
+			navigate('/');
+		} catch (error) {
+			console.error('Error al hacer login:', error);
+		}
+	};
+	
+	
 	return (
 		<>
 			<main className="flex flex-row justify-between">
 				<NavigationMenuComponent />
-				<Card className="w-full max-w-sm mt-16">
-					<CardHeader>
-						<CardTitle className="flex justify-start">
+				<div className="w-full max-w-sm mt-16">
+					<h2>
+						<h2 className="flex justify-start">
 							Ingresa a tu cuenta
-						</CardTitle>
-						<CardDescription className="flex justify-start text-start">
+						</h2>
+						<p className="flex justify-start text-start">
 							Ingresa tu Email para entrar a tu cuenta
-						</CardDescription>
-						<CardAction>
+						</p>
+						<div>
 							<Button variant="outline">
 								<Link to={'/sign-up'}>Sign Up</Link>
 							</Button>
-						</CardAction>
-					</CardHeader>
-					<CardContent>
-						<form>
+						</div>
+					</h2>
+					<div>
+						<form onSubmit={handleSubmit(onLogin)}>
 							<div className="flex flex-col gap-6">
 								<div className="grid gap-2">
 									<Label htmlFor="email">Email</Label>
 									<Input
 										id="email"
 										type="email"
-										placeholder="m@example.com"
+										placeholder="example@example.com"
 										required
+										{...register('email', {
+											required: true,
+										})}
 									/>
 								</div>
 								<div className="grid gap-2">
@@ -61,20 +102,23 @@ export function Login() {
 										id="password"
 										type="password"
 										required
+										{...register('password', {
+											required: true,
+										})}
 									/>
 								</div>
 							</div>
-						</form>
-					</CardContent>
-					<CardFooter className="flex-col gap-2">
-						<Button type="submit" className="w-full">
+					<footer className="flex-col gap-2 mt-8">
+						<Button type="submit" className="w-full cursor-pointer">
 							Entrar
 						</Button>
 						<Button variant="outline" className="w-full">
 							Login with Google
 						</Button>
-					</CardFooter>
-				</Card>
+					</footer>
+						</form>
+					</div>
+				</div>
 				<aside className="bg-violet-800 h-[400px] w-1/2 text-start justify-start align-start mt-16">
 					<div className="ml-20 pt-20">
 						<h3 className="text-5xl font-bold">Bienvenido/a</h3>
