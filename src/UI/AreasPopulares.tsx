@@ -10,6 +10,7 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
 export default function AreasPopulares() {
 	const [areas, setAreas] = useState<Areas[]>([]);
@@ -59,7 +60,9 @@ export default function AreasPopulares() {
 										className="hover:bg-violet-500"
 										onClick={() => console.log('reservar')}
 									>
-										Reservar
+										<Link to={`/area/${area.id}`}>
+											Reservar
+										</Link>
 									</Button>
 								</CardAction>
 							</CardHeader>
