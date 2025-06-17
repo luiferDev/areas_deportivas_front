@@ -9,10 +9,49 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { api } from '@/fetch/api';
 import Footer from '@/UI/Footer';
 import { NavigationMenuComponent } from '@/UI/NavigationMenu';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+
+interface RegisterForm {
+	nombre: string;
+	email: string;
+	password: string;
+}
+
+const registerRequest = async (nombre: string, email: string, password: string) => {
+	const res = await api.post('/api/Auth/register', {
+		nombre: nombre,
+		email: email,
+		password: password
+	})
+	return res.data;
+};
 
 export function SignUp() {
+	const { register, handleSubmit } = useForm<RegisterForm>();
+	const navigate = useNavigate();
+
+	const onRegister = async (data: RegisterForm) => {
+		try{
+			await registerRequest(
+				data.nombre,
+				data.email,
+				data.password
+			);
+			alert('Usuario registrado correctamente');
+			navigate('/login');
+		} catch (error) {
+			let errorMessage = 'Error desconocido';
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			}
+			alert('Error al registrar usuario: ' + errorMessage);
+		}
+	}
+
 	return (
 		<>
 			<main className="flex flex-row justify-between">
@@ -26,17 +65,17 @@ export function SignUp() {
 					</div>
 				</aside>
 				<NavigationMenuComponent />
-				<Card className="w-full max-w-sm mt-16">
-					<CardHeader>
-						<CardTitle className="flex justify-start">
+				<div className="w-full max-w-sm mt-16">
+					<h2>
+						<h2 className="flex justify-start">
 							Regístrate
-						</CardTitle>
-						<CardDescription className="flex justify-start text-start">
+						</h2>
+						<p className="flex justify-start text-start">
 							Ingresa tus datos para registrarte
-						</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<form>
+						</p>
+					</h2>
+					<div>
+						<form onSubmit={handleSubmit(onRegister)}>
 							<div className="flex flex-col gap-6">
 								<div className="grid gap-2">
 									<Label htmlFor="nombre">Nombre</Label>
@@ -44,6 +83,7 @@ export function SignUp() {
 										id="nombre"
 										type="text"
 										placeholder="Jhon Doe"
+										{...register('nombre',{required:true})}
 										required
 									/>
 								</div>
@@ -53,6 +93,7 @@ export function SignUp() {
 										id="email"
 										type="email"
 										placeholder="m@example.com"
+										{...register('email',{required:true})}
 										required
 									/>
 								</div>
@@ -66,18 +107,19 @@ export function SignUp() {
 										id="password"
 										type="password"
 										placeholder="*************"
+										{...register('password',{required:true})}
 										required
 									/>
 								</div>
 							</div>
-						</form>
-					</CardContent>
-					<CardFooter className="flex-col gap-2">
+					<footer className="flex-col gap-2 mt-8">
 						<Button type="submit" className="w-full">
 							Registrarse
 						</Button>
-					</CardFooter>
-				</Card>
+					</footer>
+						</form>
+					</div>
+				</div>
 			</main>
 			<Footer />
 		</>
