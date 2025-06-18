@@ -12,13 +12,11 @@ export const auth = axios.create({
 
 
 auth.interceptors.request.use((config) => {
-	const { token } = useAuthStore.getState(); // 👈 accede a Zustand directamente
+	const { token } = useAuthStore.getState();
 
 	if (token) {
-		config.headers = config.headers || {}; // asegúrate de que exista
+		config.headers = config.headers || {};
 		config.headers.Authorization = `Bearer ${token}`;
 	}
-
-	console.log('Request config:', config); // vuelve a verificar después del cambio
 	return config;
 });
