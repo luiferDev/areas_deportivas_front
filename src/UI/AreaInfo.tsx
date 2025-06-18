@@ -62,40 +62,35 @@ export default function AreaInfo() {
 	return (
 		<>
 			<NavigationMenuComponent />
-			<div className='my-30'>
+			<div className="my-30">
 				<h2 className="text-5xl">Información Detallada del area</h2>
 				<div className="flex flex-row justify-between">
 					{selectedAreas && (
-						<div>
-							<h3 className="text-3xl mt-8 mb-4">
-								{selectedAreas.nombre}
-							</h3>
-							<p>{selectedAreas.description}</p>
-							{selectedAreas.description === 'Gimnasio' ? (
-								<p className="">
-									{' '}
-									mensualidad:{' '}
-									<span className="font-bold">
-										${selectedAreas.precio}
-									</span>{' '}
-									sin ninguna restricción
-								</p>
-							) : (
-								<p className="">
-									<span className="font-bold">
-										${selectedAreas.precio}
-									</span>{' '}
-									el bloque de 2 horas
-								</p>
-							)}
+						<div className="mt-18 mb-4 m-auto border-2 p-6 rounded-2xl">
 							<img
+								className="aspect-square w-96 h-96"
 								src={selectedAreas.imageUrl}
 								alt={selectedAreas.description}
 							/>
+							<div className="flex flex-row items-center justify-between">
+								<div className='text-start'>
+									<h3 className="text-2xl mt-8 mb-2">
+										{selectedAreas.nombre}
+									</h3>
+									<p>{selectedAreas.description}</p>
+								</div>
+								<p className="flex flex-col text-right mt-6">
+									Precio por hora:{' '}
+									<span className="font-bold text-lg">
+										${selectedAreas.precio}
+									</span>
+								</p>
+							</div>
 						</div>
 					)}
+
 					<form
-						className="mt-30"
+						className="mt-30 m-auto"
 						onSubmit={handleSubmit(onReservation)}
 					>
 						<Label htmlFor="fecha">Hora Inicio</Label>
