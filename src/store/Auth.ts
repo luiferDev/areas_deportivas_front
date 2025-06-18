@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 
 interface Profile {
 	id: string;
-	name: string;
+	nombre: string;
 	email: string;
 	role: string;
 }
