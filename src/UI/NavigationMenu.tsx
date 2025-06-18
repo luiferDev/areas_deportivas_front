@@ -2,7 +2,12 @@
 
 import * as React from 'react';
 import { Link } from 'react-router';
-import { ClipboardSignatureIcon, LogInIcon, LogOutIcon } from 'lucide-react';
+import {
+	ClipboardSignatureIcon,
+	LogInIcon,
+	LogOutIcon,
+	UserIcon,
+} from 'lucide-react';
 
 import {
 	NavigationMenu,
@@ -98,41 +103,53 @@ export function NavigationMenuComponent() {
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>Entrar</NavigationMenuTrigger>
+					{!isAuth ? <NavigationMenuTrigger>Entrar</NavigationMenuTrigger> : <NavigationMenuTrigger>Mi Cuenta</NavigationMenuTrigger>}
 					<NavigationMenuContent>
 						<ul className="grid w-[200px] gap-4">
 							<li>
-								<NavigationMenuLink asChild>
-									<Link
-										to="/login"
-										className="flex-row items-center gap-2"
-									>
-										<LogInIcon />
-										Log In
-									</Link>
-								</NavigationMenuLink>
-								<NavigationMenuLink asChild>
-									<Link
-										to="/sign-up"
-										className="flex-row items-center gap-2"
-									>
-										<ClipboardSignatureIcon />
-										Sing Up
-									</Link>
-								</NavigationMenuLink>
 								{isAuth ? (
-									<NavigationMenuLink asChild>
-										<Link
-											onClick={logout}
-											to="/login"
-											className="flex-row items-center gap-2"
-										>
-											<LogOutIcon />
-											Log Out
-										</Link>
-									</NavigationMenuLink>
+									<>
+										<NavigationMenuLink asChild>
+											<Link
+												to="/profile"
+												className="flex-row items-center gap-2"
+											>
+												<UserIcon />
+												Profile
+											</Link>
+										</NavigationMenuLink>
+										<NavigationMenuLink asChild>
+											<Link
+												onClick={logout}
+												to="/login"
+												className="flex-row items-center gap-2"
+											>
+												<LogOutIcon />
+												Log Out
+											</Link>
+										</NavigationMenuLink>
+									</>
 								) : (
-									''
+									<>
+										<NavigationMenuLink asChild>
+											<Link
+												to="/login"
+												className="flex-row items-center gap-2"
+											>
+												<LogInIcon />
+												Log In
+											</Link>
+										</NavigationMenuLink>
+										<NavigationMenuLink asChild>
+											<Link
+												to="/sign-up"
+												className="flex-row items-center gap-2"
+											>
+												<ClipboardSignatureIcon />
+												Sing Up
+											</Link>
+										</NavigationMenuLink>
+									</>
 								)}
 							</li>
 						</ul>
