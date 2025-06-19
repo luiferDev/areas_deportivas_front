@@ -1,47 +1,22 @@
 import { useAuthStore } from '@/store/Auth';
 import { NavigationMenuComponent } from './NavigationMenu';
-import { auth } from '@/fetch/auh';
 import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { CalendarXIcon, EditIcon } from 'lucide-react';
-
-interface Reservacion {
-	reserva: Reserva;
-	areaDeportiva: AreaDeportiva;
-}
-
-interface Reserva {
-	id: string;
-	fecha: string;
-	horaInicio: string;
-	horaFin: string;
-	estado: string;
-}
-
-interface AreaDeportiva {
-	id: number;
-	nombre: string;
-	description: string;
-	tipoArea: string;
-	disponibilidad: boolean;
-	imageUrl: string;
-	precio: number;
-}
-
-const reservationRequest = async (userId: string) => {
-	const response = await auth.get<Reservacion[]>(
-		`/api/Usuario/reservaciones?userId=${userId}`
-	);
-	return response.data;
-};
+import { CalendarXIcon, EditIcon, Trash2Icon } from 'lucide-react';
+import type { Reservacion } from '@/types/types';
+import {
+	reservationRequest,
+	cancelReservationRequest,
+	deleteReservationRequest,
+} from '@/fetch/reservationRequests';
 
 export default function Profile() {
 	const profile = useAuthStore((state) => state.profile);
 	const { profile: user } = useAuthStore.getState();
 	const [reservations, setReservations] = useState<Reservacion[]>([]);
 
-	useEffect(() => {
+	const fetchReservations = () => {
 		if (!user?.id) return;
 
 		reservationRequest(user.id)
@@ -51,6 +26,34 @@ export default function Profile() {
 			.catch((err) => {
 				console.error('Error al obtener reservaciones:', err);
 			});
+	};
+
+	const handleCancelReservation = (reservationId: string) => {
+		cancelReservationRequest(reservationId)
+			.then(() => {
+				alert('Reservación cancelada exitosamente');
+				fetchReservations();
+			})
+			.catch((err) => {
+				alert('Error al cancelar la reservación' + err);
+				console.error('Error al cancelar la reservación:', err);
+			});
+	};
+
+	const handleDeleteReservation = (reservationId: string) => {
+		deleteReservationRequest(reservationId)
+			.then(() => {
+				alert('Reservación eliminada exitosamente');
+				fetchReservations();
+			})
+			.catch((err) => {
+				alert('Error al eliminar la reservación' + err);
+				console.error('Error al eliminar la reservación:', err);
+			});
+	};
+
+	useEffect(() => {
+		fetchReservations();
 	}, [user?.id]);
 
 	return (
@@ -175,25 +178,36 @@ export default function Profile() {
 															}
 															className="hover:bg-violet-500"
 															onClick={() =>
-																console.log(
-																	'Cancelar'
+																handleCancelReservation(
+																	reservation
+																		.reserva
+																		.id
 																)
 															}
 														>
 															<CalendarXIcon />
 														</Button>
 														<Button
-															variant={
-																'default'
-															}
+															variant={'default'}
 															className="hover:bg-violet-500"
 															onClick={() =>
-																console.log(
-																	'Editar'
-																)
+																alert('Editar')
 															}
 														>
 															<EditIcon />
+														</Button>
+														<Button
+															variant={'default'}
+															className="hover:bg-violet-500"
+															onClick={() =>
+																handleDeleteReservation(
+																	reservation
+																		.reserva
+																		.id
+																)
+															}
+														>
+															<Trash2Icon />
 														</Button>
 													</td>
 												</tr>
