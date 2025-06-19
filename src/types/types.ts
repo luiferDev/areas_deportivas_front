@@ -20,11 +20,3 @@ export interface AreaDeportiva {
 	imageUrl: string;
 	precio: number;
 }
-
-export interface Areas {
-	id: number;
-	nombre: string;
-	description: string;
-	imageUrl: string;
-	precio: number;
-}
