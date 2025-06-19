@@ -20,3 +20,9 @@ export interface AreaDeportiva {
 	imageUrl: string;
 	precio: number;
 }
+
+export interface CrearReservacion {
+	fecha: Date;
+	horaInicio: string;
+	horaFin: string;
+}
