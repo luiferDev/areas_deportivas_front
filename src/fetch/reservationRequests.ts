@@ -1,6 +1,19 @@
 import type { Reservacion } from "@/types/types";
 import { auth } from "./auh";
 
+export const createReservationRequest = async (
+		id: number,
+		fecha: Date,
+		horaInicio: string,
+		horaFin: string
+	) => {
+		const res = await auth.post(`/api/Usuario/reservar?Id=${id}`, {
+			fecha: fecha,
+			horaInicio: horaInicio,
+			horaFin: horaFin,
+		});
+		return res.data;
+	};
 
 export const reservationRequest = async (userId: string) => {
 	const response = await auth.get<Reservacion[]>(
