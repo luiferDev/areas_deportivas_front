@@ -1,47 +1,33 @@
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
-import { auth } from '@/fetch/auh';
-import { getAreas, type Areas } from '@/fetch/fetchAreas';
+import { getAreas } from '@/fetch/fetchAreas';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
 import { NavigationMenuComponent } from './NavigationMenu';
 import Footer from './Footer';
-
-interface Reserva {
-	fecha: Date;
-	horaInicio: string;
-	horaFin: string;
-}
+import type { AreaDeportiva, CrearReservacion } from '@/types/types';
+import { createReservationRequest } from '@/fetch/reservationRequests';
 
 export default function AreaInfo() {
 	const { id } = useParams();
-	const { register, handleSubmit } = useForm<Reserva>();
-	const [areas, setAreas] = useState<Areas[]>([]);
+	const { register, handleSubmit } = useForm<CrearReservacion>();
+	const [areas, setAreas] = useState<AreaDeportiva[]>([]);
 
 	useEffect(() => {
-		getAreas().then((data) => {
-			setAreas(data);
-		});
+		getAreas()
+			.then((data) => {
+				setAreas(data);
+			})
+			.catch((err) => {
+				console.error('Error al obtener las áreas:', err);
+			});
 	}, []);
 
-	const ReservationRequest = async (
-		id: number,
-		fecha: Date,
-		horaInicio: string,
-		horaFin: string
-	) => {
-		const res = await auth.post(`/api/Usuario/reservar?Id=${id}`, {
-			fecha: fecha,
-			horaInicio: horaInicio,
-			horaFin: horaFin,
-		});
-		return res.data;
-	};
-	const onReservation = async (data: Reserva) => {
+	const onReservation = async (data: CrearReservacion) => {
 		try {
-			const res = await ReservationRequest(
+			const res = await createReservationRequest(
 				Number(id),
 				data.fecha,
 				data.horaInicio,
@@ -55,7 +41,7 @@ export default function AreaInfo() {
 		}
 	};
 
-	const selectedAreas: Areas | undefined = areas.find(
+	const selectedAreas: AreaDeportiva | undefined = areas.find(
 		(f) => f.id.toString() === id
 	);
 
@@ -73,7 +59,7 @@ export default function AreaInfo() {
 								alt={selectedAreas.description}
 							/>
 							<div className="flex flex-row items-center justify-between">
-								<div className='text-start'>
+								<div className="text-start">
 									<h3 className="text-2xl mt-8 mb-2">
 										{selectedAreas.nombre}
 									</h3>
