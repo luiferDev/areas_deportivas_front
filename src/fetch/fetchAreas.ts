@@ -1,16 +1,11 @@
+import type { AreaDeportiva } from '@/types/types';
 import { api } from './api';
 
-export interface Areas {
-	id: number;
-	nombre: string;
-	description: string;
-	imageUrl: string;
-	precio: number;
-}
 
-export const getAreas = async (): Promise<Areas[]> => {
+
+export const getAreas = async (): Promise<AreaDeportiva[]> => {
 	try {
-		const response = await api.get<Areas[]>('/api/AreaDeportiva');
+		const response = await api.get<AreaDeportiva[]>('/api/AreaDeportiva');
 		return response.data;
 	} catch (e) {
 		throw new Error(
