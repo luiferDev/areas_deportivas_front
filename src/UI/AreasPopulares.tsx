@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { getAreas, type Areas } from '@/fetch/fetchAreas';
+import { getAreas } from '@/fetch/fetchAreas';
 import {
 	Card,
 	CardAction,
@@ -11,9 +11,10 @@ import {
 } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
+import type { AreaDeportiva } from '@/types/types';
 
 export default function AreasPopulares() {
-	const [areas, setAreas] = useState<Areas[]>([]);
+	const [areas, setAreas] = useState<AreaDeportiva[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
