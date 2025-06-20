@@ -1,32 +1,20 @@
 import { useAuthStore } from '@/store/Auth';
 import { NavigationMenuComponent } from './NavigationMenu';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { CalendarXIcon, EditIcon, Trash2Icon } from 'lucide-react';
-import type { Reservacion } from '@/types/types';
+import { CalendarXIcon, Trash2Icon } from 'lucide-react';
 import {
-	reservationRequest,
 	cancelReservationRequest,
 	deleteReservationRequest,
 } from '@/fetch/reservationRequests';
+import SheetDemo from './Sheet';
+import { useFetchReservations } from '@/hooks/useFetchReservation';
 
 export default function Profile() {
 	const profile = useAuthStore((state) => state.profile);
 	const { profile: user } = useAuthStore.getState();
-	const [reservations, setReservations] = useState<Reservacion[]>([]);
-
-	const fetchReservations = () => {
-		if (!user?.id) return;
-
-		reservationRequest(user.id)
-			.then((data) => {
-				setReservations(data);
-			})
-			.catch((err) => {
-				console.error('Error al obtener reservaciones:', err);
-			});
-	};
+	const { reservations, fetchReservations } = useFetchReservations();
 
 	const handleCancelReservation = (reservationId: string) => {
 		cancelReservationRequest(reservationId)
@@ -187,15 +175,12 @@ export default function Profile() {
 														>
 															<CalendarXIcon />
 														</Button>
-														<Button
-															variant={'default'}
-															className="hover:bg-violet-500"
-															onClick={() =>
-																alert('Editar')
+														<SheetDemo
+															reservaId={
+																reservation
+																	.reserva.id
 															}
-														>
-															<EditIcon />
-														</Button>
+														/>
 														<Button
 															variant={'default'}
 															className="hover:bg-violet-500"
