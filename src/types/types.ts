@@ -5,10 +5,10 @@ export interface Reservacion {
 
 export interface Reserva {
 	id: string;
-	fecha: string;
-	horaInicio: string;
-	horaFin: string;
-	estado: string;
+	fecha?: string;
+	horaInicio?: string;
+	horaFin?: string;
+	estado?: string;
 }
 
 export interface AreaDeportiva {
