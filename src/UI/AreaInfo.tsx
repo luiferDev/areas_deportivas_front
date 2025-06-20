@@ -82,7 +82,7 @@ export default function AreaInfo() {
 							}
 						})}
 					>
-						<Label htmlFor="fecha">Hora Inicio</Label>
+						<Label htmlFor="fecha">Fecha</Label>
 						<Input
 							id="fecha"
 							type="date"
