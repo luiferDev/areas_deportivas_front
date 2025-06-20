@@ -7,12 +7,11 @@ export const editReservationSchema = z
 	.object({
 		fecha: z
 			.string()
-			.min(1, 'La fecha es obligatoria')
 			.refine((fecha) => fecha >= today, {
 				message: 'La fecha no puede ser anterior a hoy',
 			}),
-		horaInicio: z.string().min(1, 'La hora de inicio es obligatoria'),
-		horaFin: z.string().min(1, 'La hora de fin es obligatoria'),
+		horaInicio: z.string(),
+		horaFin: z.string(),
 	})
 	.refine((data) => data.horaFin > data.horaInicio, {
 		message: 'La hora de fin debe ser mayor que la hora de inicio',
