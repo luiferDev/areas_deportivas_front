@@ -35,3 +35,20 @@ export const deleteReservationRequest = async (reservationId: string) => {
 	);
 	return response.data;
 };
+
+export const editReservationRequest = async (
+		reservaId: string,
+		fecha?: Date,
+		horaInicio?: string,
+		horaFin?: string
+	) => {
+		const response = await auth.patch(
+			`/api/Usuario/editar-reservacion?reservaId=${reservaId}`,
+			{
+				fecha: fecha,
+				horaInicio: horaInicio,
+				horaFin: horaFin,
+			}
+		);
+		return response.data;
+	};
