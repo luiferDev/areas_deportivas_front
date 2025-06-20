@@ -39,7 +39,6 @@ export function SheetDemo({ reservaId }: { reservaId: string }) {
 				data.horaInicio,
 				data.horaFin
 			);
-			console.log(res.data);
 			fetchReservations();
 			alert('Reservación exitosa');
 		} catch (error) {
