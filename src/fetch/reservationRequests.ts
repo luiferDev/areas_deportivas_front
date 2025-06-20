@@ -1,19 +1,19 @@
-import type { Reservacion } from "@/types/types";
-import { auth } from "./auh";
+import type { Reservacion } from '@/types/types';
+import { auth } from './auh';
 
 export const createReservationRequest = async (
-		id: number,
-		fecha: Date,
-		horaInicio: string,
-		horaFin: string
-	) => {
-		const res = await auth.post(`/api/Usuario/reservar?Id=${id}`, {
-			fecha: fecha,
-			horaInicio: horaInicio,
-			horaFin: horaFin,
-		});
-		return res.data;
-	};
+	id: number,
+	fecha: Date,
+	horaInicio: string,
+	horaFin: string
+) => {
+	const res = await auth.post(`/api/Usuario/reservar?Id=${id}`, {
+		fecha: fecha,
+		horaInicio: horaInicio,
+		horaFin: horaFin,
+	});
+	return res.data;
+};
 
 export const reservationRequest = async (userId: string) => {
 	const response = await auth.get<Reservacion[]>(
@@ -37,18 +37,24 @@ export const deleteReservationRequest = async (reservationId: string) => {
 };
 
 export const editReservationRequest = async (
-		reservaId: string,
-		fecha?: Date,
-		horaInicio?: string,
-		horaFin?: string
-	) => {
-		const response = await auth.patch(
-			`/api/Usuario/editar-reservacion?reservaId=${reservaId}`,
-			{
-				fecha: fecha,
-				horaInicio: horaInicio,
-				horaFin: horaFin,
-			}
-		);
-		return response.data;
-	};
+	reservaId: string,
+	fecha?: Date,
+	horaInicio?: string,
+	horaFin?: string
+) => {
+	const formattedFecha = fecha?.toISOString().split('T')[0]; // "2025-06-20"
+	const formattedHoraInicio =
+		horaInicio && horaInicio.length === 5 ? `${horaInicio}:00` : horaInicio;
+	const formattedHoraFin =
+		horaFin && horaFin.length === 5 ? `${horaFin}:00` : horaFin;
+
+	const response = await auth.patch(
+		`/api/Usuario/editar-reservacion?reservaId=${reservaId}`,
+		{
+			fecha: formattedFecha,
+			horaInicio: formattedHoraInicio,
+			horaFin: formattedHoraFin,
+		}
+	);
+	return response.data;
+};
