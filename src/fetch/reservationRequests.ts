@@ -7,10 +7,15 @@ export const createReservationRequest = async (
 	horaInicio: string,
 	horaFin: string
 ) => {
+	const formattedFecha = fecha.toISOString().split('T')[0];
+	const formattedHoraInicio =
+		horaInicio.length === 5 ? `${horaInicio}:00` : horaInicio;
+	const formattedHoraFin = horaFin.length === 5 ? `${horaFin}:00` : horaFin;
+
 	const res = await auth.post(`/api/Usuario/reservar?Id=${id}`, {
-		fecha: fecha,
-		horaInicio: horaInicio,
-		horaFin: horaFin,
+		fecha: formattedFecha,
+		horaInicio: formattedHoraInicio,
+		horaFin: formattedHoraFin,
 	});
 	return res.data;
 };
