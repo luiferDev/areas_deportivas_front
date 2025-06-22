@@ -8,15 +8,15 @@ export const reservationSchema = z
 		fecha: z
 			.string()
 			.min(1, 'La fecha es obligatoria')
-			.refine((fecha) => fecha >= today, {
-				message: 'La fecha no puede ser anterior a hoy',
+			// Ahora: sólo fechas strictly > today
+			.refine((f) => f > today, {
+				message: 'La fecha debe ser posterior a hoy',
 			}),
 		horaInicio: z.string().min(1, 'La hora de inicio es obligatoria'),
 		horaFin: z.string().min(1, 'La hora de fin es obligatoria'),
 	})
-	.refine((data) => data.horaFin > data.horaInicio, {
+	.refine((d) => d.horaFin > d.horaInicio, {
 		message: 'La hora de fin debe ser mayor que la hora de inicio',
 		path: ['horaFin'],
 	});
-
 export type ReservationForm = z.infer<typeof reservationSchema>;
