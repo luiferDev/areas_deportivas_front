@@ -1,0 +1,8 @@
+{
+	"rewrites": [
+		{
+			"source": "/api/(.*)",
+			"destination": "http://areas-deportivas.runasp.net/api/$1"
+		}
+	]
+}
