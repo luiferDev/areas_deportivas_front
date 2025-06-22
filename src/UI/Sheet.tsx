@@ -33,7 +33,7 @@ export function SheetDemo({ reservaId }: { reservaId: string }) {
 
 	const handleEditReservations = async (data: EditReservationForm) => {
 		try {
-			const res = await editReservationRequest(
+			await editReservationRequest(
 				reservaId,
 				new Date(data.fecha),
 				data.horaInicio,
