@@ -9,24 +9,10 @@ import type { AreaDeportiva } from '@/types/types';
 import { createReservationRequest } from '@/fetch/reservationRequests';
 import { useGetAreas } from '@/hooks/useGetAreas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { reservationSchema } from '@/schemas/reservationSchemas';
-import type { ReservationForm } from '@/schemas/reservationSchemas';
-
-export const onReservation = async (data: ReservationForm, id: string) => {
-	try {
-		const res = await createReservationRequest(
-			Number(id),
-			new Date(data.fecha),
-			data.horaInicio,
-			data.horaFin
-		);
-		console.log(res.data);
-		alert('Reservación exitosa');
-	} catch (error) {
-		console.error('Error al hacer la reservación:', error);
-		alert('Error al hacer la reservación: ' + error);
-	}
-};
+import {
+	reservationSchema,
+	type ReservationForm,
+} from '@/schemas/reservationSchemas';
 
 export default function AreaInfo() {
 	const { id } = useParams();
@@ -38,11 +24,32 @@ export default function AreaInfo() {
 	} = useForm<ReservationForm>({
 		resolver: zodResolver(reservationSchema),
 	});
-	
 
 	const selectedAreas: AreaDeportiva | undefined = areas.find(
 		(f) => f.id.toString() === id
 	);
+
+	const onReservation = async (data: ReservationForm, id: string) => {
+		try {
+			const res = await createReservationRequest(
+				Number(id),
+				new Date(data.fecha),
+				data.horaInicio,
+				data.horaFin
+			);
+			console.log('Respuesta exitosa del servidor:', res);
+			alert('Reservación exitosa');
+		} catch (err: any) {
+			// 👉 Capturamos todo el body, status y headers
+			console.error('Status:', err.response?.status);
+			console.error('Body:', err.response?.data);
+			console.error('Headers:', err.response?.headers);
+			alert(
+				'Error al crear reservación: ' +
+					JSON.stringify(err.response?.data)
+			);
+		}
+	};
 
 	return (
 		<>
@@ -110,9 +117,9 @@ export default function AreaInfo() {
 							type="time"
 							{...register('horaFin', { required: true })}
 						/>
-						{errors.horaInicio && (
+						{errors.horaFin && (
 							<p className="text-red-500 text-sm">
-								{errors.horaInicio.message}
+								{errors.horaFin.message}
 							</p>
 						)}
 						<Button
