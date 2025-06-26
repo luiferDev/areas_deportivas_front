@@ -111,7 +111,7 @@ export default function AreaInfo() {
 								{errors.horaInicio.message}
 							</p>
 						)}
-						<Label htmlFor="hora-final">Hora Final</Label>
+						<Label htmlFor="horaFin">Hora Final</Label>
 						<Input
 							id="horaFin"
 							type="time"
