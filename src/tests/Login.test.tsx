@@ -4,7 +4,6 @@ import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { Login } from '@/Links/Login';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { api } from '@/fetch/api';
-import { auth } from '@/fetch/auh';
 import { useAuthStore } from '@/store/Auth';
 
 // 🧪 Mocks Globales
